@@ -1,14 +1,14 @@
 name: soft_icon_gen
-description: A sample command-line application with basic argument parsing.
-version: 0.0.1
-# repository: https://github.com/my_org/my_repo
+description: An icon font generator for Flutter applications.
+version: 1.0.0
+repository: https://github.com/softyesti/soft_icon_gen
+homepage: https://softyes.com.br
 
 environment:
   sdk: ^3.5.1
 
-# Add regular dependencies here.
 dependencies:
-  args: ^2.4.2
+  path: ^1.8.0
 
 dev_dependencies:
   lints: ^4.0.0
