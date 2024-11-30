@@ -4,7 +4,7 @@ description: An icon font generator for Flutter applications.
 homepage: https://softyes.com.br
 repository: https://github.com/softyesti/icon_pack_generator
 
-version: 1.0.0
+version: 0.1.0
 
 environment:
   sdk: ^3.5.1
