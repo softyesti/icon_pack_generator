@@ -5,6 +5,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:icon_pack_generator/entities/icon_entity.dart';
+import 'package:icon_pack_generator/templates/icon_data_template.dart';
+import 'package:icon_pack_generator/templates/icon_pack_ext_template.dart';
+import 'package:icon_pack_generator/templates/icon_pack_template.dart';
+import 'package:icon_pack_generator/templates/icon_template.dart';
 import 'package:path/path.dart' as p;
 import 'package:recase/recase.dart';
 
@@ -80,5 +84,32 @@ class IconPackGenerator {
 
     await dataFile.delete();
     return data;
+  }
+
+  Future<String> genClass({required List<IconEntity> icons}) async {
+    final iconData = IconDataTemplate.generate(
+      className: className,
+      packageName: packageName,
+    );
+
+    final iconPack = icons.map((icon) {
+      return IconTemplate.generate(
+        icon: icon,
+        className: className,
+      );
+    }).join('\n');
+
+    final iconPackExt = IconPackExtTemplate.generate(
+      icons: icons,
+      source: iconSource,
+      className: className,
+    );
+
+    return IconPackTemplate.generate(
+      className: className,
+      iconData: iconData,
+      iconPack: iconPack,
+      iconPackExt: iconPackExt,
+    );
   }
 }
