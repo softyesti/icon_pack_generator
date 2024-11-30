@@ -11,6 +11,8 @@ import 'package:icon_pack_generator/templates/icon_pack_template.dart';
 import 'package:icon_pack_generator/templates/icon_template.dart';
 import 'package:path/path.dart' as p;
 import 'package:recase/recase.dart';
+import 'package:yaml/yaml.dart';
+import 'package:yaml_edit/yaml_edit.dart';
 
 class IconPackGenerator {
   const IconPackGenerator({
@@ -121,5 +123,44 @@ class IconPackGenerator {
     var file = File(path);
     file = await file.create();
     await file.writeAsString(content);
+  }
+
+  Future<void> writePubspec() async {
+    final family = className.pascalCase;
+    final filename = p.setExtension(className.snakeCase, '.ttf');
+    final path = p.relative(p.join(fontTarget.path, filename));
+
+    final file = File(p.join(p.current, 'pubspec.yaml'));
+    final pubspec = await file.readAsString();
+
+    final yaml = loadYaml(pubspec);
+    final editor = YamlEditor(pubspec);
+
+    final font = {
+      'family': family,
+      'fonts': [
+        {'asset': './$path'},
+      ],
+    };
+
+    // ignore: avoid_dynamic_calls
+    if (yaml['flutter']?['fonts'] == null) {
+      final value = {
+        'fonts': [font],
+      };
+
+      editor.update(['flutter'], value);
+      await file.writeAsString(editor.toString());
+      return;
+    }
+
+    final fonts = editor.parseAt(['flutter', 'fonts']);
+    // ignore: inference_failure_on_untyped_parameter, avoid_dynamic_calls
+    final exists = fonts.value.any((font) => font['family'] == family) as bool;
+
+    if (!exists) {
+      editor.appendToList(['flutter', 'fonts'], font);
+      await file.writeAsString(editor.toString());
+    }
   }
 }
