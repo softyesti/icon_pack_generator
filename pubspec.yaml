@@ -1,16 +1,24 @@
-name: soft_icon_gen
+name: icon_pack_generator
 description: An icon font generator for Flutter applications.
-version: 1.0.0
-repository: https://github.com/softyesti/soft_icon_gen
+
 homepage: https://softyes.com.br
+repository: https://github.com/softyesti/icon_pack_generator
+
+version: 1.0.0
 
 environment:
   sdk: ^3.5.1
 
 dependencies:
   path: ^1.8.0
+  recase: ^4.1.0
+  yaml: ^3.1.2
+  yaml_edit: ^2.2.1
 
 dev_dependencies:
   lints: ^4.0.0
   test: ^1.24.0
   very_good_analysis: ^6.0.0
+
+executables:
+  generate: icon_pack_generator

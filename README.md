@@ -1,4 +1,4 @@
-# Soft Icon Generator
+# Icon Pack Generator
 
 An icon font generator for Flutter applications.
 
@@ -19,5 +19,5 @@ Coming soon
 
 ## Credits
 
-- João Sereia [\<joao.sereia@softyes.com.br\>](mailto:joao.sereia@softyes.com.br)
 - SoftYes TI [\<softyes.com.br\>](https://softyes.com.br)
+- João Sereia [\<joao.sereia@softyes.com.br\>](mailto:joao.sereia@softyes.com.br)

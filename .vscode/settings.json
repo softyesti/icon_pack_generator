@@ -1,7 +1,9 @@
 {
   "cSpell.words": [
     "bools",
+    "fantasticon",
     "pubspec",
     "softyes"
-  ]
+  ],
+  "makefile.configureOnOpen": false
 }
