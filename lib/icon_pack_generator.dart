@@ -112,4 +112,14 @@ class IconPackGenerator {
       iconPackExt: iconPackExt,
     );
   }
+
+  Future<void> writeClass(String content) async {
+    final name = className.snakeCase;
+    final output = p.absolute(classTarget.path);
+    final path = p.setExtension(p.join(output, name), '.dart');
+
+    var file = File(path);
+    file = await file.create();
+    await file.writeAsString(content);
+  }
 }
