@@ -25,7 +25,7 @@ abstract class IconPackExtTemplate {
       final filename = p.setExtension(icon.name.snakeCase, '.svg');
       final path = p.relative(p.join(source.path, filename));
 
-      return '  0x$code: $path,';
+      return "  0x$code: '$path',";
     });
 
     var template = _template.replaceAll('%CLASS_NAME%', className);
