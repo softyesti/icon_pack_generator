@@ -1,24 +1,30 @@
 name: icon_pack_generator
-description: "An icon pack generator from .svg files for Flutter applications."
+description: An icon pack generator from .svg files for Flutter applications.
 
 homepage: https://softyes.com.br
 repository: https://github.com/softyesti/icon_pack_generator
 
-version: 0.1.0
+platforms:
+  macos:
+  linux:
+  windows:
+
+version: 0.2.0
 
 environment:
-  sdk: ^3.5.1
+  flutter: ">=3.24.0"
+  sdk: ">=3.5.0 <4.0.0"
 
 dependencies:
   path: ^1.8.0
-  recase: ^4.1.0
   yaml: ^3.1.2
+  recase: ^4.1.0
   yaml_edit: ^2.2.1
 
 dev_dependencies:
-  lints: ^4.0.0
   test: ^1.24.0
-  very_good_analysis: ^6.0.0
+  lints: ^6.1.0
+  very_good_analysis: ^10.3.0
 
 executables:
   generate: icon_pack_generator

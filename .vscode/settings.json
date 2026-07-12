@@ -2,8 +2,10 @@
   "cSpell.words": [
     "bools",
     "fantasticon",
+    "linux",
     "pubspec",
     "softyes"
   ],
-  "makefile.configureOnOpen": false
+  "makefile.configureOnOpen": false,
+  "dart.flutterSdkPath": ".fvm/versions/3.44.6"
 }
