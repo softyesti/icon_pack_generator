@@ -27,7 +27,7 @@ Future<void> main() async {
 }
 
 Future<IconPackGenerator> _setup() async {
-  final config = File(p.join(p.current, 'icon_pack_generator.yaml'));
+  final config = File(p.absolute('icon_pack_generator.yaml'));
   final configContent = await config.readAsString();
 
   final yaml = loadYaml(configContent);
@@ -41,8 +41,8 @@ Future<IconPackGenerator> _setup() async {
   return IconPackGenerator(
     className: className,
     packageName: packageName,
-    iconSource: Directory(p.absolute(iconSource)),
-    fontTarget: Directory(p.absolute(fontTarget)),
-    classTarget: Directory(p.absolute(classTarget)),
+    iconSource: Directory(p.normalize(p.absolute(iconSource))),
+    fontTarget: Directory(p.normalize(p.absolute(fontTarget))),
+    classTarget: Directory(p.normalize(p.absolute(classTarget))),
   );
 }

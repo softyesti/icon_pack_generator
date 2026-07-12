@@ -5,8 +5,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:icon_pack_generator/src/entities/icon_entity.dart';
-import 'package:icon_pack_generator/src/templates/icon_data_template.dart';
-import 'package:icon_pack_generator/src/templates/icon_pack_ext_template.dart';
 import 'package:icon_pack_generator/src/templates/icon_pack_template.dart';
 import 'package:icon_pack_generator/src/templates/icon_template.dart';
 import 'package:path/path.dart' as p;
@@ -46,22 +44,23 @@ class IconPackGenerator {
 
   Future<List<IconEntity>> genFont() async {
     final name = className.snakeCase;
-    final source = p.absolute(iconSource.path);
-    final output = p.absolute(fontTarget.path);
+    final input = iconSource.path;
+    final output = fontTarget.path;
 
     final process = await Process.start(
-      'fantasticon',
+      'npx',
       runInShell: true,
       [
-        source,
+        'fantasticon',
         '--name',
         name,
-        '--output',
-        output,
-        '--asset-types',
-        'json',
         '--font-types',
         'ttf',
+        '--asset-types',
+        'json',
+        '--output',
+        '$output',
+        '$input',
       ],
     );
 
@@ -89,29 +88,10 @@ class IconPackGenerator {
   }
 
   Future<String> genClass({required List<IconEntity> icons}) async {
-    final iconData = IconDataTemplate.generate(
-      className: className,
-      packageName: packageName,
-    );
-
-    final iconPack = icons.map((icon) {
-      return IconTemplate.generate(
-        icon: icon,
-        className: className,
-      );
-    }).join('\n');
-
-    final iconPackExt = IconPackExtTemplate.generate(
-      icons: icons,
-      source: iconSource,
-      className: className,
-    );
-
     return IconPackTemplate.generate(
       className: className,
-      iconData: iconData,
-      iconPack: iconPack,
-      iconPackExt: iconPackExt,
+      packageName: packageName,
+      iconPack: icons.map((i) => IconTemplate.generate(i)).join(),
     );
   }
 

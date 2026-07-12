@@ -4,7 +4,8 @@
     "fantasticon",
     "linux",
     "pubspec",
-    "softyes"
+    "softyes",
+    "twbs"
   ],
   "makefile.configureOnOpen": false,
   "dart.flutterSdkPath": ".fvm/versions/3.44.6"
