@@ -7,9 +7,9 @@ import 'package:icon_pack_generator/icon_pack_generator.dart';
 import 'package:path/path.dart' as p;
 import 'package:yaml/yaml.dart';
 
-Future<void> main() async {
+Future<void> main(List<String> args) async {
   print('[Icon Pack Generator] Loading configurations');
-  final generator = await _setup();
+  final generator = await _setup(args.firstOrNull);
 
   print('[Icon Pack Generator] Generating icon pack font');
   final icons = await generator.genFont();
@@ -26,8 +26,8 @@ Future<void> main() async {
   print('[Icon Pack Generator] Icon pack generation completed!');
 }
 
-Future<IconPackGenerator> _setup() async {
-  final config = File(p.absolute('icon_pack_generator.yaml'));
+Future<IconPackGenerator> _setup(String? path) async {
+  final config = File(p.absolute(path ?? 'icon_pack_generator.yaml'));
   final configContent = await config.readAsString();
 
   final yaml = loadYaml(configContent);

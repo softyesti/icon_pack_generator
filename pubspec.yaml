@@ -3,6 +3,7 @@ description: An icon pack generator from .svg files for Flutter applications.
 
 homepage: https://softyes.com.br
 repository: https://github.com/softyesti/icon_pack_generator
+issue_tracker: https://github.com/softyesti/icon_pack_generator/issues
 
 platforms:
   macos:
