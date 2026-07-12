@@ -17,9 +17,12 @@ abstract class %CLASS_NAME% {
 }
 ''';
 
+/// Template class of the main class.
 abstract class IconPackTemplate {
+  /// Creates a new [IconPackTemplate].
   const IconPackTemplate();
 
+  /// Fill out the template with the necessary information.
   static String generate({
     required String className,
     required String packageName,

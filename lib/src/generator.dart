@@ -12,7 +12,9 @@ import 'package:recase/recase.dart';
 import 'package:yaml/yaml.dart';
 import 'package:yaml_edit/yaml_edit.dart';
 
+/// A class that exposes the methods for creating an icon pack.
 class IconPackGenerator {
+  /// Creates a new [IconPackGenerator].
   const IconPackGenerator({
     required this.className,
     required this.packageName,
@@ -21,12 +23,22 @@ class IconPackGenerator {
     required this.classTarget,
   });
 
+  /// The name of the main class.
   final String className;
+
+  /// The package name.
   final String packageName;
+
+  /// Directory containing the .svg icons.
   final Directory iconSource;
+
+  /// Destination directory for the font file.
   final Directory fontTarget;
+
+  /// Destination directory for the class file.
   final Directory classTarget;
 
+  /// Rename the files to snake_case.
   Future<void> rename() async {
     final files = await iconSource.list().toList();
     final queue = <Future<FileSystemEntity>>[];
@@ -42,6 +54,7 @@ class IconPackGenerator {
     await Future.wait(queue);
   }
 
+  /// Extract the SVGs data, create the font file, and map the glyphs.
   Future<List<IconEntity>> genFont() async {
     final name = className.snakeCase;
     final output = fontTarget.path;
@@ -90,14 +103,16 @@ class IconPackGenerator {
     return data;
   }
 
+  /// Creates the main class of the icon pack.
   Future<String> genClass({required List<IconEntity> icons}) async {
     return IconPackTemplate.generate(
       className: className,
       packageName: packageName,
-      iconPack: icons.map((i) => IconTemplate.generate(i)).join('\n'),
+      iconPack: icons.map(IconTemplate.generate).join('\n'),
     );
   }
 
+  /// Write the main class to the destination directory.
   Future<void> writeClass(String content) async {
     final name = className.snakeCase;
     final output = p.absolute(classTarget.path);
@@ -108,6 +123,7 @@ class IconPackGenerator {
     await file.writeAsString(content);
   }
 
+  /// Update the pubspec with the mapping to the font files.
   Future<void> writePubspec() async {
     final family = className.pascalCase;
     final filename = p.setExtension(className.snakeCase, '.ttf');

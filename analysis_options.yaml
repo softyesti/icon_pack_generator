@@ -6,4 +6,4 @@ analyzer:
 
 linter:
   rules:
-    one_member_abstracts: ignore
+    one_member_abstracts: false
