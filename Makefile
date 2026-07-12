@@ -1,12 +1,16 @@
-.PHONY: run example
+.PHONY: run example upgrade
 
 default: run
 
 run:
 	@echo "Running application"
-	@dart run ./bin/icon_pack_generator.dart 
+	@fvm dart run ./bin/icon_pack_generator.dart 
 
 example:
 	@echo "Running example"
-	@dart run ./example/icon_pack_generator_example.dart
+	@fvm dart run ./example/icon_pack_generator_example.dart
  
+upgrade:
+	@echo "Upgrading dependencies..."
+	@fvm dart pub upgrade
+	@fvm dart pub upgrade --major-versions
