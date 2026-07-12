@@ -2,7 +2,8 @@ import 'package:icon_pack_generator/src/entities/icon_entity.dart';
 import 'package:recase/recase.dart';
 
 const _template = '''
-  static const %ICON_NAME% = IconData(0x%ICON_CODE%, fontFamily: _fontFamily, fontPackage: _fontPackage);
+  /// <img alt="%ALT%" src="data:image/svg+xml;utf8,%DATA%" width="64" height="64" />
+  static const %NAME% = IconData(0x%CODE%, fontFamily: _fontFamily, fontPackage: _fontPackage);
 ''';
 
 abstract class IconTemplate {
@@ -10,7 +11,9 @@ abstract class IconTemplate {
 
   static String generate(IconEntity icon) {
     return _template
-        .replaceFirst('%ICON_NAME%', icon.name.camelCase)
-        .replaceFirst('%ICON_CODE%', icon.code.toRadixString(16));
+        .replaceFirst('%ALT%', icon.name.snakeCase)
+        .replaceFirst('%DATA%', icon.data)
+        .replaceFirst('%NAME%', icon.name.camelCase)
+        .replaceFirst('%CODE%', icon.code.toRadixString(16));
   }
 }

@@ -44,10 +44,20 @@ class IconPackGenerator {
 
   Future<List<IconEntity>> genFont() async {
     final name = className.snakeCase;
-    final input = iconSource.path;
     final output = fontTarget.path;
 
-    final process = await Process.start(
+    final icons = await iconSource.list().asyncMap((fs) async {
+      final content = await File(fs.path).readAsString();
+      return content
+          .replaceAll('"', "'")
+          .replaceAll('#', '%23')
+          .replaceAll('> <', '><')
+          .replaceAll(RegExp(r'\s+'), ' ')
+          .replaceAll('black', 'currentColor')
+          .trim();
+    }).toList();
+
+    await Process.start(
       'npx',
       runInShell: true,
       [
@@ -59,28 +69,21 @@ class IconPackGenerator {
         '--asset-types',
         'json',
         '--output',
-        '$output',
-        '$input',
+        output,
+        iconSource.path,
       ],
-    );
-
-    await stdout.addStream(
-      process.stdout.map((bytes) {
-        var message = utf8.decode(bytes);
-        if (message == '\x1b[32mDone\x1b[39m\n') {
-          message = '\x1b[32mSuccess generated font\x1b[39m\n';
-        }
-
-        return utf8.encode(message);
-      }),
     );
 
     final dataFile = File(p.setExtension(p.join(output, name), '.json'));
     final dataString = await dataFile.readAsString();
     final dataMap = jsonDecode(dataString) as Map<String, dynamic>;
 
-    final data = dataMap.entries.map((entry) {
-      return IconEntity(code: entry.value as int, name: entry.key);
+    final data = dataMap.entries.indexed.map((e) {
+      return IconEntity(
+        code: e.$2.value as int,
+        name: e.$2.key,
+        data: icons[e.$1],
+      );
     }).toList();
 
     await dataFile.delete();
@@ -91,7 +94,7 @@ class IconPackGenerator {
     return IconPackTemplate.generate(
       className: className,
       packageName: packageName,
-      iconPack: icons.map((i) => IconTemplate.generate(i)).join(),
+      iconPack: icons.map((i) => IconTemplate.generate(i)).join('\n'),
     );
   }
 
