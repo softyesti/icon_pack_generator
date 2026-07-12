@@ -1,4 +1,5 @@
-// ignore_for_file: avoid_print
+//
+// ignore_for_file: avoid_dynamic_calls, avoid_print
 
 import 'dart:io';
 
@@ -31,15 +32,10 @@ Future<IconPackGenerator> _setup() async {
 
   final yaml = loadYaml(configContent);
 
-  // ignore: avoid_dynamic_calls
   final className = yaml['icon_pack_generator']!['class_name'] as String;
-  // ignore: avoid_dynamic_calls
   final packageName = yaml['icon_pack_generator']!['package_name'] as String;
-  // ignore: avoid_dynamic_calls
   final iconSource = yaml['icon_pack_generator']!['icon_source'] as String;
-  // ignore: avoid_dynamic_calls
   final fontTarget = yaml['icon_pack_generator']!['font_target'] as String;
-  // ignore: avoid_dynamic_calls
   final classTarget = yaml['icon_pack_generator']!['class_target'] as String;
 
   return IconPackGenerator(

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:icon_pack_generator/entities/icon_entity.dart';
+import 'package:icon_pack_generator/src/entities/icon_entity.dart';
 import 'package:path/path.dart' as p;
 import 'package:recase/recase.dart';
 
