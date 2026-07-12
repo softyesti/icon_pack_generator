@@ -3,3 +3,5 @@ pubspec.lock
 
 # FVM Version Cache
 .fvm/
+
+node_modules/
