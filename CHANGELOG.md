@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+
+* Fixed an issue where incorrect icons were generated in previews (dart doc).
+
 ## 0.2.0
 
 * File reorganization.

@@ -59,16 +59,20 @@ class IconPackGenerator {
     final name = className.snakeCase;
     final output = fontTarget.path;
 
-    final icons = await iconSource.list().asyncMap((fs) async {
-      final content = await File(fs.path).readAsString();
-      return content
+    final icons = <String, String>{};
+    await iconSource.list().forEach((fs) async {
+      final name = p.basenameWithoutExtension(fs.path);
+      var content = await File(fs.path).readAsString();
+      content = content
           .replaceAll('"', "'")
           .replaceAll('#', '%23')
           .replaceAll('> <', '><')
           .replaceAll(RegExp(r'\s+'), ' ')
           .replaceAll('black', 'currentColor')
           .trim();
-    }).toList();
+
+      icons.addAll({name: content});
+    });
 
     await Process.start(
       'npx',
@@ -87,7 +91,7 @@ class IconPackGenerator {
       ],
     );
 
-    final dataFile = File(p.setExtension(p.join(output, name), '.json'));
+    final dataFile = File(p.join(output, p.setExtension(name, '.json')));
     final dataString = await dataFile.readAsString();
     final dataMap = jsonDecode(dataString) as Map<String, dynamic>;
 
@@ -95,7 +99,7 @@ class IconPackGenerator {
       return IconEntity(
         code: e.$2.value as int,
         name: e.$2.key,
-        data: icons[e.$1],
+        data: icons[e.$2.key]!,
       );
     }).toList();
 
