@@ -14,5 +14,8 @@
   },
   "devDependencies": {
     "@twbs/fantasticon": "^3.1.0"
+  },
+  "allowScripts": {
+    "ttf2woff2@5.0.0": true
   }
 }

@@ -10,7 +10,7 @@ platforms:
   linux:
   windows:
 
-version: 0.2.1
+version: 0.3.0
 
 environment:
   flutter: ">=3.10.0"
