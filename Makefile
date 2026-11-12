@@ -8,13 +8,13 @@ deps:
 
 run:
 	@echo "Running application..."
-	@fvm dart run ./bin/icon_pack_generator.dart 
+	@dart run ./bin/icon_pack_generator.dart 
 
 example:
 	@echo "Running the example..."
-	@fvm dart run ./example/icon_pack_generator_example.dart
+	@dart run ./example/icon_pack_generator_example.dart
  
 upgrade:
 	@echo "Upgrading dependencies..."
-	@fvm dart pub upgrade
-	@fvm dart pub upgrade --major-versions
+	@dart pub upgrade
+	@dart pub upgrade --major-versions
